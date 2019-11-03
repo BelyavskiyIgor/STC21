@@ -11,10 +11,10 @@ public class App
             map.put(i, i+1);
         }
         System.out.println(map.toString());
-        for(int i = 0; i <=5; i++){
+        for(int i = 0; i <=3; i++){
             System.out.println(map.getValue(i));
         }
-        //ystem.out.println();
+
     }
 
 

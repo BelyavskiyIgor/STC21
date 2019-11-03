@@ -18,23 +18,16 @@ public class MyHashMap {
 
     //Put
     public void  put(Object key, Object value){
-
-        // if getValue(key) != null
-        //   entry[i].setV(value)
-        // else
-        //   Node topNode = entry[key]
-        //   Node newNode = new Node(k, v, topNode)
-        //   entry[key] = newNode
-        //    size++
-        if(getValue(key) != null){
-            entry[indexFor(key)].setV(value);
+        Node currendNode = entry[indexFor(key)];
+        while (currendNode != null){
+            if(currendNode.getK().equals(key)) {
+                currendNode.setV(value);
+                return;
+            }
+            currendNode = currendNode.next;
         }
-        else {
-            Node currendNode = entry[indexFor(key)];// есть ли в etynry  нода
-            entry[indexFor(key)] = new Node(key, value, currendNode);// кладем в ноду значение
-
-            size++;
-        }
+        entry[indexFor(key)] = new Node(key, value, entry[indexFor(key)]);// кладем в ноду значение
+        size++;
 
     }
     //remove
@@ -56,26 +49,27 @@ public class MyHashMap {
           prevNode = currendNode;
           currendNode = currendNode.next;
         }
-
-
         return size;
-
     }
     // update
-    public void update(Object key){
+    public void  update(Object key, Object value){
+        Node currendNode = entry[indexFor(key)];
+
+        while (currendNode != null){
+            if(currendNode.getK().equals(key)) {
+                currendNode.setV(value);
+                return;
+            }
+            currendNode = currendNode.next;
+        }
+        return;
 
     }
     //Получаем значение по ключу
     public Object getValue(Object key){
-       // return null;
 
         Node node = entry[indexFor(key)];
-        //Если нода равно 0 или следующая нода равна 0
-        //if (node == null || node.next == null){
-        if (node == null){
-            return null; // возвращаем значение ноды
 
-        }
         //пока нода не равна 0
         while (node != null) {
 

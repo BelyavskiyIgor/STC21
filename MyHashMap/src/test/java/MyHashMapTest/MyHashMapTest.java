@@ -33,4 +33,14 @@ public class MyHashMapTest {
         Assert.assertEquals(0,map.getSize());
         Assert.assertNull(map.getValue(1));
     }
+
+    @Test
+    public void update() {
+        map.update(1, "RRR");
+        Assert.assertNull(map.getValue(1));
+
+        map.put(1, "ABC");
+        map.update(1, "RRR");
+        Assert.assertEquals(map.getValue(1), "RRR");
+    }
 }
