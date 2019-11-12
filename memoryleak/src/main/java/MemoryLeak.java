@@ -26,7 +26,8 @@ public class MemoryLeak {
             if (list.get(i).contains("1")) //удаляем из списка все 1
                 list.remove(i);
             if (list.get(i).contains("2")) // удваиваем цифру 2
-            {String s = list.get(i);
+            {
+                String s = list.get(i);
                 list.add((i+1), s);
             }
         }
