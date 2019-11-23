@@ -12,8 +12,16 @@ import java.util.List;
 
 public class Game {
     //переменные для замера выполнения программы
-    long timeStart;
-    long timeFinish;
+    private long timeStart;
+    private long timeFinish;
+
+    public long getTimeStart() {
+        return timeStart;
+    }
+    public long getTimeFinish() {
+        return timeFinish;
+    }
+
     //считаем соседей
     int neighbors(int[][]board, int a, int b){
         int size = board.length;
@@ -56,13 +64,43 @@ public class Game {
         } catch (IOException e) {
             //System.out.println(e.getMessage()); //снять коментарий если хотим выводить в консоль
         }
-
     }
     int[][] field;
     int[][] nextField;
+    //метод подсчета времени выполнения
+    public void fixStartTime(){
+        timeStart =  System.currentTimeMillis();
+    }
     //метод с иходными данными.
-    public void initialData(String[] args) throws IOException {
-        FileReader in = new FileReader(args[0]);
+    public void initialData(String[] args) throws IOException, InterruptedException {
+        fileRedaer(args[0]);
+        timeStart =  System.currentTimeMillis();
+        for(int gen = 0; gen < Integer.parseInt(args[2]); gen++){
+            for(int i = 0; i < nextField.length; i++){
+                for (int j = 0; j < nextField[i].length;j++){
+                    field[i][j] = nextField[i][j];
+                }
+            }
+            printLife(field, args[1]);
+            int size = field.length;
+            for(int i = 0; i < size; i++){
+                for(int j = 0; j < size; j++){
+                    if(field[i][j] == 1 && !(neighbors(field, i, j) == 2 || neighbors(field, i, j) == 3)){
+                        nextField[i][j] = 0;
+                    }
+                    else if (field[i][j] == 0 && neighbors(field, i, j) == 3){
+                        nextField[i][j] = 1;
+                    }
+                }
+            }
+        }
+    }
+    //метод отсчета времени исполнения
+    public void fixFinishTime(){
+        timeFinish=  System.currentTimeMillis();
+    }
+    protected void fileRedaer(String arg) throws IOException {
+        FileReader in = new FileReader(arg);
         BufferedReader br = new BufferedReader(in);
         List<String[]> list = new ArrayList<>();
 
@@ -74,32 +112,8 @@ public class Game {
         nextField = new int[list.size()][list.get(0).length];
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < list.get(i).length; j++) {
-                nextField[i][j]=Integer.parseInt(list.get(i)[j]);
+                nextField[i][j] = Integer.parseInt(list.get(i)[j]);
             }
-        }
-        // начало отсчета
-        timeStart =  System.currentTimeMillis();
-        for(int gen = 0; gen < Integer.parseInt(args[2]); gen++){
-            for(int i = 0; i < nextField.length; i++){
-                for (int j = 0; j < nextField[i].length;j++){
-                    field[i][j] = nextField[i][j];
-                }
-            }
-            printLife(field, args[1]);
-            int size = field.length;
-
-            for(int i = 0; i < size; i++){
-                for(int j = 0; j < size; j++){
-                    if(field[i][j] == 1 && !(neighbors(field, i, j) == 2 || neighbors(field, i, j) == 3)){
-                        nextField[i][j] = 0;
-                    }
-                    else if (field[i][j] == 0 && neighbors(field, i, j) == 3){
-                        nextField[i][j] = 1;
-                    }
-                }
-            }
-            // конец отсчета
-            timeFinish=  System.currentTimeMillis();
         }
     }
 }
