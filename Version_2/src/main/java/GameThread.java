@@ -7,7 +7,7 @@ import java.io.IOException;
 
 
 public class GameThread extends Game {
-    //метод с иходными данными.
+    //метод с иходными данными
     public void initialData(String[] args) throws IOException, InterruptedException {
         fileRedaer(args[0]);
         for(int gen = 0; gen < Integer.parseInt(args[2]); gen++){

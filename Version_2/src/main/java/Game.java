@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    //переменные для замера выполнения программы
+    //переменные для замера выполнения программы.
     private long timeStart;
     private long timeFinish;
 
